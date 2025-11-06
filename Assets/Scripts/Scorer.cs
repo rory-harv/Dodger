@@ -61,7 +61,6 @@ public class Scorer : MonoBehaviour
         startButton.style.display = DisplayStyle.None;
         titleText.style.display = DisplayStyle.None;
         started = true;
-        Update();
     }
     private void OnCollisionEnter(Collision other)
     {
