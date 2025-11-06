@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Mover : MonoBehaviour
 {   
     [SerializeField] float moveSpeed = 10f;
-    
-    void Start() 
+
+    void Start()
     {        
         PrintInstruction();
     }
@@ -28,5 +30,4 @@ public class Mover : MonoBehaviour
         float zValue = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
         transform.Translate(xValue, yValue, zValue);
     }
-
 }

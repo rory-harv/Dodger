@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Dropper : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class Dropper : MonoBehaviour
 
     void Start()
     {
+
         myMeshRenderer = GetComponent<MeshRenderer>();
         myRigidBody = GetComponent<Rigidbody>();
 
@@ -18,10 +21,12 @@ public class Dropper : MonoBehaviour
 
     void Update()
     {
+
         if (Time.time > timeToWait)
         {
             myMeshRenderer.enabled = true;
             myRigidBody.useGravity = true;
         }
     }
+
 }
