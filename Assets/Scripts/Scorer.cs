@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Scorer : MonoBehaviour
 {
@@ -20,13 +22,17 @@ public class Scorer : MonoBehaviour
         score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
         scoreText.text = "Score: " + score;
     }
-    
+
     private void OnCollisionEnter(Collision other) 
     {
         if (other.gameObject.tag != "Hit")
         {
             hits++;
             Debug.Log("You've bumped into a thing this many times: " + hits);
+            if (hits >= 3)
+            {
+                Debug.Lob("Game Over");
+            }
         }        
     }
 }
