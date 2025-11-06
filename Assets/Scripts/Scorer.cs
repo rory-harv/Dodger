@@ -16,31 +16,53 @@ public class Scorer : MonoBehaviour
     private Button restartButton;
     public bool finished = false;
     public bool collision = false;
-
+    private Label titleText;
+    private Button startButton;
+    public bool started = false;
     void Start()
     {
         scoreText = uiDocument.rootVisualElement.Q<Label>("ScoreLabel");
         livesText = uiDocument.rootVisualElement.Q<Label>("LivesLeft");
         restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
+        titleText = uiDocument.rootVisualElement.Q<Label>("TitleLabel");
+        startButton = uiDocument.rootVisualElement.Q<Button>("StartButton");
         restartButton.clicked += ReloadScene;
         restartButton.style.display = DisplayStyle.None;
+        startButton.clicked += HideTitle;
+        
     }
 
     void Update()
     {
-        if (finished == false)
+        if (started == true)
         {
-            elapsedTime += Time.deltaTime;
-            score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
-            scoreText.text = "Score: " + score;
-            livesText.text = "Lives Left: " + livesleft;
-            if (collision == true && livesleft > -1)
+            if (finished == false)
             {
-                livesleft--;
+                elapsedTime += Time.deltaTime;
+                score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
+                scoreText.text = "Score: " + score;
+                livesText.text = "Lives Left: " + livesleft;
+                if (collision == true && livesleft > -1)
+                {
+                    livesleft--;
+                }
             }
+        }
+        else
+        {
+            elapsedTime = 0;
+            score = 0;
+            livesleft = 0;
         }
     }
 
+    void HideTitle()
+    {
+        startButton.style.display = DisplayStyle.None;
+        titleText.style.display = DisplayStyle.None;
+        started = true;
+        Update();
+    }
     private void OnCollisionEnter(Collision other)
     {
         collision = true;
@@ -64,4 +86,6 @@ public class Scorer : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+
 }
