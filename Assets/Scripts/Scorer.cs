@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class Scorer : MonoBehaviour
 {
@@ -10,20 +11,28 @@ public class Scorer : MonoBehaviour
     public float scoreMultiplier = 10f;
     public UIDocument uiDocument;
     private Label scoreText;
+    private Button restartButton;
+    public bool finished = false;
 
     void Start()
     {
         scoreText = uiDocument.rootVisualElement.Q<Label>("ScoreLabel");
+        restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
+        restartButton.clicked += ReloadScene;
+        restartButton.style.display = DisplayStyle.None;
     }
 
     void Update()
     {
-        elapsedTime += Time.deltaTime;
-        score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
-        scoreText.text = "Score: " + score;
+        if (finished == false)
+        {
+            elapsedTime += Time.deltaTime;
+            score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
+            scoreText.text = "Score: " + score;
+        }
     }
 
-    private void OnCollisionEnter(Collision other) 
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag != "Hit")
         {
@@ -31,8 +40,14 @@ public class Scorer : MonoBehaviour
             Debug.Log("You've bumped into a thing this many times: " + hits);
             if (hits >= 3)
             {
-                Debug.Lob("Game Over");
+                Debug.Log("Game Over");
+                restartButton.style.display = DisplayStyle.Flex;
+                finished = true;
             }
-        }        
+        }
+    }
+    void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
