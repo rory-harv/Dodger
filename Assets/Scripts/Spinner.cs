@@ -13,6 +13,9 @@ public class Spinner : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(xAngle, yAngle, zAngle);
+        if (!Dropper.paused && Scorer.started)
+        {
+            transform.Rotate(xAngle, yAngle, zAngle);
+        }
     }
 }

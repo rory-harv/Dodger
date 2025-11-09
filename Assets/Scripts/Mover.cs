@@ -13,7 +13,10 @@ public class Mover : MonoBehaviour
 
     void Update()
     {
-        MovePlayer();
+        if (!Dropper.paused && Scorer.started)
+        {
+            MovePlayer();
+        }
     }
 
     void PrintInstruction()

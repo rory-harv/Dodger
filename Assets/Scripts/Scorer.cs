@@ -18,7 +18,7 @@ public class Scorer : MonoBehaviour
     public bool collision = false;
     private Label titleText;
     private Button startButton;
-    public bool started = false;
+    public static bool started = false;
     void Start()
     {
         scoreText = uiDocument.rootVisualElement.Q<Label>("ScoreLabel");
@@ -34,7 +34,7 @@ public class Scorer : MonoBehaviour
 
     void Update()
     {
-        if (started == true)
+        if (started == true && !Dropper.paused)
         {
             if (finished == false)
             {
@@ -50,9 +50,18 @@ public class Scorer : MonoBehaviour
         }
         else
         {
-            elapsedTime = 0;
-            score = 0;
-            livesleft = 0;
+            if (Dropper.paused || started == false)
+            {
+                score = score;
+                elapsedTime = elapsedTime;
+                livesleft = livesleft;
+            }
+            else if (!Dropper.paused && started == false)
+            {
+                elapsedTime = 0;
+                score = 0;
+                livesleft = 0;
+            }
         }
     }
 
@@ -61,6 +70,8 @@ public class Scorer : MonoBehaviour
         startButton.style.display = DisplayStyle.None;
         titleText.style.display = DisplayStyle.None;
         started = true;
+        livesleft = 3;
+        Update();
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -77,6 +88,7 @@ public class Scorer : MonoBehaviour
                 livesText.text = "Lives Left: " + livesleft;
                 restartButton.style.display = DisplayStyle.Flex;
                 finished = true;
+                started = false;
             }
         }
         collision = false;

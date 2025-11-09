@@ -18,8 +18,11 @@ public class FlyAtPlayer : MonoBehaviour
 
     void Update()
     {
-        MoveToPlayer();
-        DestroyWhenReached();
+        if (!Dropper.paused)
+        {
+            MoveToPlayer();
+            DestroyWhenReached();
+        }
     }
 
     void MoveToPlayer()
