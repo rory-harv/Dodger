@@ -28,15 +28,15 @@ public class Scorer : MonoBehaviour
         startButton = uiDocument.rootVisualElement.Q<Button>("StartButton");
         restartButton.clicked += ReloadScene;
         restartButton.style.display = DisplayStyle.None;
-        startButton.clicked += HideTitle;
+        startButton.clicked += HideTitle;   // removes instructions title page when started
         
     }
 
     void Update()
     {
-        if (started == true && !Dropper.paused)
+        if (started == true && !Dropper.paused) // checks if game has started and is not paused
         {
-            if (finished == false)
+            if (finished == false)  // checks to ensure player has not died
             {
                 elapsedTime += Time.deltaTime;
                 score = Mathf.FloorToInt(elapsedTime * scoreMultiplier);
@@ -44,19 +44,19 @@ public class Scorer : MonoBehaviour
                 livesText.text = "Lives Left: " + livesleft;
                 if (collision == true && livesleft > -1)
                 {
-                    livesleft--;
+                    livesleft--;    // decrease lives left
                 }
             }
         }
         else
         {
-            if (Dropper.paused || started == false)
+            if (Dropper.paused || started == false) // if game is paused or unstarted
             {
                 score = score;
                 elapsedTime = elapsedTime;
                 livesleft = livesleft;
             }
-            else if (!Dropper.paused && started == false)
+            else if (!Dropper.paused && started == false)   // if game not paused and not started (baseline value of variables)
             {
                 elapsedTime = 0;
                 score = 0;

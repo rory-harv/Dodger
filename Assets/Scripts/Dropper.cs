@@ -25,11 +25,11 @@ public class Dropper : MonoBehaviour
 
     void Update()
     {
-        if (paused == false && Scorer.started)
+        if (paused == false && Scorer.started)  // checks if game is paused after started
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                paused = true;
+                paused = true;  // initiates bool conditional
             }
 
             if (Time.time > timeToWait && paused == false)
@@ -42,7 +42,7 @@ public class Dropper : MonoBehaviour
         {
             pauseButton.style.display = DisplayStyle.Flex;
 
-            myMeshRenderer.enabled = false;
+            myMeshRenderer.enabled = false; // pauses objects
             myRigidBody.useGravity = false;
 
             pauseButton.clicked += UnPause;
@@ -51,7 +51,7 @@ public class Dropper : MonoBehaviour
 
     void UnPause()
     {
-        pauseButton.style.display = DisplayStyle.None;
+        pauseButton.style.display = DisplayStyle.None;  // resumes game
         paused = false;
     }
 }
